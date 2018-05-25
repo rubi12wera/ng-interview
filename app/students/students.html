@@ -1,4 +1,33 @@
 <h2>Students</h2>
-<ul>
-	<li>Here are your students...</li>
+
+
+<div class="filter" ng-show="vm.students.length">
+  <input class="form-control" type="text" ng-model="searchName" ng-model-options="{ debounce: 100 }" placeholder="Search students by name">
+</div>
+
+<ul class="list-group" ng-show="vm.students.length">
+	<li class="list-group-item list-group-item-action" ng-repeat="student in vm.students |orderBy:['FirstName','LastName'] | filter:searchName">
+    <div ng-model="collapsed" class="student-name" ng-click="collapsed =! collapsed">{{ student.FirstName }} {{ student.LastName }}</div>
+    <table class="table table-hover" ng-show="collapsed">
+    <thead>
+      <tr>
+        <th>Favorite Food</th>
+        <th>Favorite Movie</th>
+        <th>Favorite Color</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ student.FavoriteFood }}</td>
+        <td>{{ student.FavoriteMovie }}</td>
+        <td>{{ student.FavoriteColor }}</td>
+      </tr>
+  </tbody>
+</table>
+  </li>
 </ul>
+<div ng-show="vm.errorMessage" class="alert alert-info">
+  {{vm.errorMessage}}
+</div>
+
+
